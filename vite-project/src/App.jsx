@@ -1,35 +1,66 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useReducer } from "react";
+import "./App.css";
+import { TipContext } from "./TipContext";
+import DataPanel from "./components/DataPanel";
+import UserPanel from "./components/UserPanel";
+import { INIT_STATE, reducer } from "./utils/reducer";
+import { isEmpty } from "./utils/isEmpty";
+import { checkError } from "./utils/checkError";
 
 function App() {
-  const [count, setCount] = useState(0)
-
+  const [state, dispatch] = useReducer(reducer, INIT_STATE);
+  useEffect(() => {
+    if (
+      !isEmpty(state.input.bill, state.input.tip, state.input.numberOfPeople)
+    ) {
+      const _error = checkError(
+        state.input.bill,
+        state.input.tip,
+        state.input.numberOfPeople
+      );
+      console.log(_error);
+      dispatch({
+        type: "ERROR",
+        payload: _error,
+      });
+      if (!Object.keys(_error).length === 0) return;
+      console.log("ASD");
+      //Calculate tip amount per person and total per person
+      const tipAmountPerPerson =
+        ((state.input.bill / state.input.numberOfPeople) * state.input.tip) /
+        100;
+      const totalPerPerson =
+        state.input.bill / state.input.numberOfPeople + tipAmountPerPerson;
+      dispatch({
+        type: "VALUE",
+        payload: {
+          tipAmountPerPerson: tipAmountPerPerson.toFixed(2),
+          totalPerPerson: totalPerPerson.toFixed(2),
+        },
+      });
+    }
+    console.log("state change", state);
+  }, [state.input.bill, state.input.tip, state.input.numberOfPeople]);
+  console.log(state);
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="App">
+      <div className="container">
+        <h1 className="brand">
+          SPLI
+          <br />
+          TTER
+        </h1>
+        <div className="box">
+          <div className="split-two-panel">
+            <TipContext.Provider value={{ state, dispatch }}>
+              <UserPanel />
+              <DataPanel />
+            </TipContext.Provider>
+          </div>
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    </div>
+  );
 }
 
-export default App
+export default App;
