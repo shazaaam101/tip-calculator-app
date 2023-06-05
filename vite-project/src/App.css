@@ -163,7 +163,7 @@ input {
   outline: 2px solid var(--neutral-error);
 }
 
-.InputField .error {
+.error {
   color: var(--neutral-error);
 }
 
@@ -216,6 +216,10 @@ input {
 
   .App .split-two-panel {
     flex-direction: column;
+  }
+
+  .UserPanel .select-tips .grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .DataPanel .group .value {

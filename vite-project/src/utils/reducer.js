@@ -1,7 +1,7 @@
 export const INIT_STATE = {
   input: { bill: null, tip: null, numberOfPeople: null },
   value: { tipAmountPerPerson: null, totalPerPerson: null },
-  error: { bill: "", tip: "", numberOfPeople: "" },
+  error: { bill: "", tip: "", people: "" },
 };
 
 export const reducer = (state, action) => {

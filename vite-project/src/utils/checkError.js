@@ -11,9 +11,9 @@ export const checkError = (bill, tip, numberOfPeople) => {
   }
   if (numberOfPeople) {
     if (numberOfPeople === 0) {
-      error = { ...error, numberOfPeople: "Can't be zero" };
+      error = { ...error, people: "Can't be zero" };
     } else if (!isNumber(numberOfPeople)) {
-      error = { ...error, numberOfPeople: "Invalid input" };
+      error = { ...error, people: "Invalid input" };
     }
   }
 

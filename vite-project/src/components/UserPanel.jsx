@@ -3,7 +3,7 @@ import InputField from "./InputField";
 import { TipContext } from "../TipContext";
 
 const UserPanel = () => {
-  const { dispatch } = useContext(TipContext);
+  const { state, dispatch } = useContext(TipContext);
   const listTips = [5, 10, 15, 25, 50];
 
   const handleSelectTip = (e) => {
@@ -24,7 +24,11 @@ const UserPanel = () => {
     <div className="UserPanel">
       <InputField logo="bill" name="Bill" />
       <div className="select-tips">
-        <p>Select Tip %</p>
+        <p>
+          Select Tip %&emsp;
+          {state.error.tip && <span className="error">{state.error.tip}</span>}
+        </p>
+
         <div className="grid">
           {listTips.map((tip, idx) => (
             <button

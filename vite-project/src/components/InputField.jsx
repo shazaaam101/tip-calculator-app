@@ -1,9 +1,8 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { TipContext } from "../TipContext";
 
 const InputField = ({ logo, name }) => {
-  const [error, setError] = useState(false);
-  const { dispatch } = useContext(TipContext);
+  const { state, dispatch } = useContext(TipContext);
   const handleInput = (e) => {
     dispatch({ type: logo.toUpperCase(), payload: e.target.value });
   };
@@ -11,7 +10,7 @@ const InputField = ({ logo, name }) => {
     <div className={`InputField ${logo}`}>
       <div className="inform">
         <label htmlFor={name}>{name}</label>
-        {error && <div className="error">Can't be zero</div>}
+        {state.error[logo] && <div className="error">{state.error[logo]}</div>}
       </div>
 
       <input

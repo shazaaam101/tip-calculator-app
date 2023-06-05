@@ -23,7 +23,7 @@ function App() {
         type: "ERROR",
         payload: _error,
       });
-      if (!Object.keys(_error).length === 0) return;
+      if (Object.keys(_error).length !== 0) return;
       console.log("ASD");
       //Calculate tip amount per person and total per person
       const tipAmountPerPerson =
